@@ -15,7 +15,7 @@ func main() {
 		CarId:     "W 1090 T",
 		Duration:  4,
 		IsMember:  false,
-		IsHolyday: true,
+		IsHolyday: false,
 	}
 	// Mobil 2 parkir 2jam, pada hari libur dan seorang member
 	car2 := Parkir{
@@ -34,7 +34,7 @@ func main() {
 func hitungBiaya(car Parkir) {
 	// Deklarasi Tarif
 	tarifDasar := 5000.0
-	tarifHolyday := 3000.0
+	tarifHoliday := 3000.0
 	total := 0.0
 
 	// Menghitung biaya perjam
@@ -59,7 +59,7 @@ func hitungBiaya(car Parkir) {
 
 		// jika hari libur maka ada biaya tambahan
 		if car.IsHolyday && jam == car.Duration {
-			total += tarifHolyday
+			total += tarifHoliday
 		}
 	}
 
