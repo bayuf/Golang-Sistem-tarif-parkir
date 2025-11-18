@@ -15,7 +15,7 @@ func main() {
 		CarId:     "W 1090 T",
 		Duration:  4,
 		IsMember:  false,
-		IsHolyday: false,
+		IsHolyday: true,
 	}
 	// Mobil 2 parkir 2jam, pada hari libur dan seorang member
 	car2 := Parkir{
@@ -25,6 +25,7 @@ func main() {
 		IsHolyday: true,
 	}
 
+	// Hitung Biaya Parkir
 	hitungBiaya(car1)
 	hitungBiaya(car2)
 
@@ -36,24 +37,29 @@ func hitungBiaya(car Parkir) {
 	tarifHolyday := 3000.0
 	total := 0.0
 
+	// Menghitung biaya perjam
 	for jam := 1; jam <= car.Duration; jam++ {
 
+		// jika melebihi 2jam maka biaya dasar menjadi 2000/jam
 		if jam >= 3 {
 			tarifDasar = 2000
 		}
 
+		// tambah biaya dasar ke total
 		total += tarifDasar
 
+		//jika member maka hitung diskon
 		if car.IsMember && jam == car.Duration {
 			if car.Duration <= 5 {
 				total = total * 50 / 100
 			} else {
 				total = total * 30 / 100
 			}
+		}
 
-			if car.IsHolyday {
-				total += tarifHolyday
-			}
+		// jika hari libur maka ada biaya tambahan
+		if car.IsHolyday && jam == car.Duration {
+			total += tarifHolyday
 		}
 	}
 
