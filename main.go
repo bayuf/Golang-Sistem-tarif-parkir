@@ -13,7 +13,7 @@ func main() {
 	// Mobil 1 parkir 4jam, pada hari kerja dan bukan member
 	car1 := Parkir{
 		CarId:     "W 1090 T",
-		Duration:  4,
+		Duration:  5,
 		IsMember:  false,
 		IsHolyday: false,
 	}
@@ -35,32 +35,20 @@ func hitungBiaya(car Parkir) {
 	// Deklarasi Tarif
 	tarifDasar := 5000.0
 	tarifHoliday := 3000.0
-	total := 0.0
+	total := tarifDasar
 
-	// Menghitung biaya perjam
-	for jam := 1; jam <= car.Duration; jam++ {
+	if car.Duration > 2 {
+		total += (float64(car.Duration) - 2) * 2000
+	}
 
-		// jika melebihi 2jam maka biaya dasar menjadi 2000/jam
-		if jam >= 3 {
-			tarifDasar = 2000
-		}
+	if car.IsMember && car.Duration <= 5 {
+		total = total * 50 / 100
+	} else if car.IsMember {
+		total = total * 30 / 100
+	}
 
-		// tambah biaya dasar ke total
-		total += tarifDasar
-
-		//jika member maka hitung diskon
-		if car.IsMember && jam == car.Duration {
-			if car.Duration <= 5 {
-				total = total * 50 / 100
-			} else {
-				total = total * 30 / 100
-			}
-		}
-
-		// jika hari libur maka ada biaya tambahan
-		if car.IsHolyday && jam == car.Duration {
-			total += tarifHoliday
-		}
+	if car.IsHolyday {
+		total += tarifHoliday
 	}
 
 	fmt.Println("--------System Tarif Parkir--------")
